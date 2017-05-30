@@ -5,19 +5,18 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(express.static('public'))
 app.set('view engine', 'ejs')
-const MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient
 
-var db;
+var db
 
 MongoClient.connect('mongodb://admin:adminadmin@ds151431.mlab.com:51431/star-wars-quotes', function (err, database) {
 	if(err) {
 		return console.log(err)
 	}
-	db = database;
+	db = database
 	app.listen(3000, function () {
 		console.log('Listening on 3000')
     })
-
 })
 
 app.get('/',  function(req, res) {
@@ -26,7 +25,6 @@ app.get('/',  function(req, res) {
 		res.render('index.ejs', {quotes: result})
     })
 })
-
 
 app.post('/quotes', function(req, res)  {
 	db.collection('quotes').save(req.body, function (err, result) {
@@ -61,8 +59,5 @@ app.del('/quotes', function (req, res) {
 		function (err, result) {
 			if(err) return res.send(500, err)
 			res.json('A darth quote got deleted :/.')
-        }
-	)
-	
+        })
 })
-
